@@ -1,0 +1,418 @@
+.sticky {
+    border-bottom-color: #333;
+}
+.slider-container {
+    border-bottom: 1px solid #333;
+    padding-top: 5px;
+}
+.gallery-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.item {
+    height: 168px;
+    background-image: linear-gradient(#222 0%, #111 100%);
+    border-color: #000;
+}
+.thumbnail {
+    max-height: 137px;
+    margin: 0;
+    background-image: linear-gradient(#222 0%, #111 100%);
+}
+.thumbnail:hover {
+    transform: none;
+    background-image: linear-gradient(#222 0%, #111 100%);
+}
+.buy {
+    background: rgba(0,0,0,.75);
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px!important;
+    font-family:'Teko-Regular';
+}
+.buy:hover {
+	 background: rgba(0,0,0,.75);
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px!important;
+    font-family:'Teko-Regular';
+}
+.notification-container {
+    width: 100%;
+}
+.button {
+    padding-top: 5px;
+}
+.notification-container, .footer {
+    border-top-color: #333;
+}
+.sticky, .slider-container, .gallery-container, .notification-container, .footer{
+    background-image: linear-gradient(#222 0%, #111 100%);
+}
+@font-face {
+	font-family:'Teko-Regular';
+	src:url('../fonts/Teko-Regular.ttf')
+}
+.twitter {
+	background:#08a0e9;
+	position:relative;
+	width:100%;
+	height:40px;
+	margin:0;
+	color:#fff;
+	border:1px solid #08a0e9;
+	font-size:1.2em;
+	font-weight:700;
+	text-align:center;
+	letter-spacing:1px;
+	outline:none;
+	cursor:pointer;
+	font-family:'Teko-Regular';
+}
+.fb {
+	background:#4267b2;
+	position:relative;
+	width:100%;
+	height:40px;
+	margin:0;
+	color:#fff;
+	border:1px solid #4267b2;
+	font-size:1.2em;
+	font-weight:700;
+	text-align:center;
+	letter-spacing:1px;
+	outline:none;
+	cursor:pointer;
+	font-family:'Teko-Regular';
+}
+.playgame {
+	background:#34a853;
+	position:relative;
+	width:100%;
+	height:40px;
+	margin:0;
+	color:#fff;
+	border:1px solid #34a853;
+	font-size:1.2em;
+	font-weight:700;
+	text-align:center;
+	letter-spacing:1px;
+	outline:none;
+	cursor:pointer;
+	font-family:'Teko-Regular';
+}
+.logtweet {
+	color:#08a0e9;
+}
+.logfb {
+	color:#4267b2;
+}
+.logplay {
+	color:#34a853;
+}
+input[type=text],input[type=password],input[type=number] {
+background:transparent;
+width:260px;
+height:45px;
+float:left;
+padding:12px 20px;
+margin:8px 0;
+display:inline-block;
+border:1px solid black;
+border-radius:3px;
+color:black;
+box-sizing:border-box;
+}
+h5 {
+ font-size: 1.5em;
+ text-align: center;
+ color: black;
+}
+small {
+color: white;
+font-family:'Teko-Regular';
+}
+.status-collect {
+font-family:'Teko-Regular';
+color: white;
+}
+.mylabel {
+color: black;
+float: left;
+}
+.close {
+width: 20px;
+height: 20px;
+background: #000;
+border-radius: 50%;
+border: 3px solid #fff;
+display: block;
+text-align: center;
+color: #fff;
+text-decoration: none;
+position: absolute;
+top: -10px;
+right: -10px;
+}
+.formku {
+float:left;
+width:300px;
+border-color: white;
+background: white;
+}
+#collected {
+width: 100%;
+height: 100%;
+position: fixed;
+padding-top:50px;
+top: 0;
+left: 0;
+z-index: 9999;
+visibility: hidden;
+overflow: scroll;
+}
+.collected-box {
+width: 300px;
+height: auto;
+background-image:url("img/login-popup/collected-pop2.png");
+position: relative;
+text-align: center;
+margin: 15% auto;
+}
+.collected-box-image {
+background:url(../img/login-popup/collected-box.png) no-repeat;
+width:300px;
+height:700px;
+position:relative;
+margin:15% auto;
+background-size: 300px auto;
+}
+#collected:target {
+visibility: visible;
+}
+#gp {
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 9999;
+visibility: hidden;
+overflow: scroll;
+}
+.gp-login {
+width: 300px;
+height: auto;
+background: #fff;
+position: relative;
+text-align: center;
+margin: 15% auto;
+}
+#gp:target {
+visibility: visible;
+}
+.nav-gp {
+background-color:#4285f4;
+height:40px;
+border:4px;
+padding:10px;
+}
+.btn-login-gp {
+position:relative;
+width:50%;
+height:45px;
+margin:0;
+background-color:#4285f4;
+color:white;
+border-radius:3px;
+border:#4c75a3;
+font-size:1em;
+font-weight:bold;
+float:right;
+letter-spacing:1px;
+outline:none;
+cursor:pointer;
+}
+.btn-forgot-gp {
+color:#4c75a3;
+}
+.btn-register-gp {
+position: relative;
+width: 50%;
+height: 40px;
+margin-bottom:5px;
+background-color: transparent;
+color: #4285f4;
+border-radius: 3px;
+border: #4285f4;
+font-size: 1em;
+font-weight:bold;
+float:left;
+letter-spacing: 1px;
+outline: none;
+cursor: pointer;
+}
+
+#fb {
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 9999;
+visibility: hidden;
+overflow: scroll;
+}
+
+.fb-login {
+width: 300px;
+height: auto;
+background: #fff;
+position: relative;
+text-align: center;
+margin: 15% auto;
+}
+#fb:target {
+visibility: visible;
+}
+.nav-fb {
+background-color:#3b5998;
+height:40px;
+border:4px;
+padding:10px;
+}
+.btn-login-fb {
+position:relative;
+width:100%;
+height:45px;
+margin:0;
+background-color:#4080ff;
+color:white;
+border-radius:3px;
+border:#4080ff;
+font-size:1em;
+font-weight:bold;
+letter-spacing:1px;
+outline:none;
+cursor:pointer;
+}
+.btn-forgot-fb {
+color:#4c75a3;
+}
+.btn-register-fb {
+position: relative;
+width: auto;
+height: 40px;
+margin-bottom:5px;
+background-color: #1cbf27;
+color: white;
+border-radius: 3px;
+border: #1cbf27;
+font-size: 1em;
+font-weight:bold;
+letter-spacing: 1px;
+outline: none;
+cursor: pointer;
+}
+.btn-language-fb {
+color: #3b5998;
+}
+.bawahan-fb {
+color: #ADB9D3;
+}
+.divider {
+	display:block;
+	margin-left:5%;
+	margin-right:5%;
+	margin-top:-8px;
+	overflow:hidden;
+	text-align:center;
+	white-space:nowrap;
+	width:90%;
+}
+.divider>span {
+	display:inline-block;
+	position:relative;
+	color:#4b4f56;
+	cursor:default;
+	font-size:13px;
+}
+.divider>span:before,.divider>span:after {
+	background:#ced0d4;
+	content:"";
+	height:1px;
+	position:absolute;
+	top:50%;
+	width:9999px;
+}
+.divider>span:before {
+	margin-right:15px;
+	right:100%;
+}
+.divider>span:after {
+	left:100%;
+	margin-left: 15px;
+}
+
+
+#twitter {
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+z-index: 9999;
+visibility: hidden;
+overflow: scroll;
+}
+
+.twitter-login {
+width: 300px;
+height: auto;
+background: #fff;
+position: relative;
+text-align: center;
+margin: 15% auto;
+}
+#twitter:target {
+visibility: visible;
+}
+.nav-twitter {
+background-color:#55acee;
+height:40px;
+border:4px;
+padding:10px;
+}
+.btn-login-twitter {
+position:relative;
+width:100%;
+height:45px;
+margin:0;
+background-color:#55acee;
+color:white;
+border-radius:50px;
+border:#4c75a3;
+font-size:1em;
+font-weight:bold;
+letter-spacing:1px;
+outline:none;
+cursor:pointer;
+}
+.bawahan-twitter {
+color:#55acee;
+}
+.btn-close {
+	position:relative;
+	width:100%;
+	height:40px;
+	margin:0;
+	background-color:#f8a800;
+	border:#f8a800;
+	color:#fff;
+	font-size:1.2em;
+	font-family:'Teko-Regular';
+	letter-spacing:1px;
+	border-radius:0px;
+	outline:none;
+	cursor:pointer;
+}    

