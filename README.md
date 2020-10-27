@@ -1,4 +1,4 @@
-![alt text](https://raw.githubusercontent.com/mrcakil/Penetration-Revolution/master/tester.jpg)
+![alt text](https://raw.githubusercontent.com/mrcakil/Penetration-Revolution/master/test.png)
 
 # Penetration-Revolution
 ### Version : 1.1
